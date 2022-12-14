@@ -1,8 +1,21 @@
 .container {
- border: 1px solid red;
-}
-div {
-    border: 1px solid blue;
-    margin: 2px 2px 2px 2px ;
+ border: 1px solid blue;
+ height: 500px;
+ width: 500px;
+ display: flex;
 
+}
+
+.horizontal {
+    border: 1px solid black;
+    height: 100%;
+    width: 100%;
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
 }
