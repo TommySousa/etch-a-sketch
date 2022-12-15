@@ -4,7 +4,7 @@ const dimensionX = 16;
 const dimensionY = 16;
 
 const originalGrid = (y, x) => {
-    const container = document.querySelector('.container'); 
+    const container = document.getElementById('container'); 
     for (let i = 0; i<y; i++){
         let div = document.createElement('div');
         div.classList.add('vertical');
@@ -17,55 +17,32 @@ const originalGrid = (y, x) => {
     };
 };
 
-//let mouseDown = false;
-//document.body.onmousedown = () => (mouseDown = true);
-//document.body.onmouseup = () => (mouseDown = false);
+//START DRAWING WHEN THE MOUSE IS HOVERING THE SQUARES
+const startDraw = (e) => {
+    e.preventDefault();
+    const squares = document.querySelectorAll('.horizontal');
+    squares.forEach(square => square.addEventListener('mouseover', paint));
+};
 
-// //INSTEAD OF MOUSEOVER I WILL TRY AND MAKE A MOUSEDOWN APPROACH
-const container = document.querySelector('.container');
-//const hover = document.getElementsByClassName('horizontal');
+//STOP DRAWING WHEN THE MOUSE IS HOVERING THE SQUARES
+const stopDraw = (e) => {
+    e.preventDefault();//to prevent default behaviour of  draggin 
+    const squares = document.querySelectorAll('.horizontal');
+    squares.forEach(square => square.removeEventListener('mouseover', paint))
+};
 
-// for (let i = 0; i<hove.length; i++){
-//     hove[i].addEventListener('click', (el) => {
-//         console.log(el.target);
-//         ismouseDown = true;
-//         console.log(hove[i]);
-//     })
-// }
+//FUNCTION THAT PAINTS  THIS REFERS TO THE SQUARE THAT THE MOUSE IS ON CURRENTLY
+function paint (e) {
+    e.preventDefault();
+    this.classList.add('horizontal_hover');
+};
 
-
-
-// container.addEventListener('mousedown', (event) => {
-//     console.log(event)
-//     ismouseDown = true;
-// })
-// container.addEventListener('mouseup', (event) => {
-//     ismouseDown = false;
-//     console.log(event)
-// })
-
-// setInterval(() => {
-//     if(ismouseDown) {
-//         console.log(container)   
-//     }
-// }, 500)
-
-
- //container[0].addEventListener('mousedown', () => {
-   // console.log('click');
-
-
-//FUNCTION THAT MAKES THE ELEMENTS WITH CLASS HORIZONTAL BE PAINTED
-//   const hoverSquares = () => {
-//        const hover = document.getElementsByClassName('horizontal');
-//        for (let i = 0; i < hover.length; i++){
-//            hover[i].addEventListener('mouseover', (el) => {
-//               el.target.classList.add('horizontal_hover')
-//               console.log(hover[i])
-//            });
-//        };
-//    };
-
+//FUNCTION THAT MAKES THE 
+const draw = () => {
+    const container = document.querySelector('#container');
+    container.addEventListener('mousedown', startDraw);
+    container.addEventListener('mouseup', stopDraw)
+};
 
 
  //CLICK THE BUTTON AND CHANGE DE NUMBER OF SQUARES IN CANVAS
@@ -106,12 +83,9 @@ const resizeGrid = () => {
     hoverSquares();
 };
 
+
 //make the grid mount when the page is loaded
 window.onload = originalGrid(dimensionY, dimensionX);
-//window.onload = hoverSquares();
-let mouseDown;
-let target;
-//document.body.onmousedown = () => (mouseDown = true);
-//document.body.onmouseup = () => (mouseDown = false);
+window.onload = draw();
 
 
