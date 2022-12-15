@@ -17,19 +17,56 @@ const originalGrid = (y, x) => {
     };
 };
 
-//FUNCTION THAT MAKES THE ELEMENTS WITH CLASS HORIZONTAL HOVER
-const hoverSquares = () => {
-    const hover = document.getElementsByClassName('horizontal');
-    for (let i = 0; i < hover.length; i++){
-        hover[i].addEventListener('mouseover', (el) => {
-           el.target.classList.add('horizontal_hover')
-        })
-    };
-} ;
+//let mouseDown = false;
+//document.body.onmousedown = () => (mouseDown = true);
+//document.body.onmouseup = () => (mouseDown = false);
 
-//make the grid mount when the page is loaded
-window.onload = originalGrid(dimensionY, dimensionX);
-window.onload = hoverSquares();
+// //INSTEAD OF MOUSEOVER I WILL TRY AND MAKE A MOUSEDOWN APPROACH
+const container = document.querySelector('.container');
+//const hover = document.getElementsByClassName('horizontal');
+
+// for (let i = 0; i<hove.length; i++){
+//     hove[i].addEventListener('click', (el) => {
+//         console.log(el.target);
+//         ismouseDown = true;
+//         console.log(hove[i]);
+//     })
+// }
+
+
+
+// container.addEventListener('mousedown', (event) => {
+//     console.log(event)
+//     ismouseDown = true;
+// })
+// container.addEventListener('mouseup', (event) => {
+//     ismouseDown = false;
+//     console.log(event)
+// })
+
+// setInterval(() => {
+//     if(ismouseDown) {
+//         console.log(container)   
+//     }
+// }, 500)
+
+
+ //container[0].addEventListener('mousedown', () => {
+   // console.log('click');
+
+
+//FUNCTION THAT MAKES THE ELEMENTS WITH CLASS HORIZONTAL BE PAINTED
+//   const hoverSquares = () => {
+//        const hover = document.getElementsByClassName('horizontal');
+//        for (let i = 0; i < hover.length; i++){
+//            hover[i].addEventListener('mouseover', (el) => {
+//               el.target.classList.add('horizontal_hover')
+//               console.log(hover[i])
+//            });
+//        };
+//    };
+
+
 
  //CLICK THE BUTTON AND CHANGE DE NUMBER OF SQUARES IN CANVAS
  const grid = document.querySelector('.grid');
@@ -67,4 +104,14 @@ const resizeGrid = () => {
     removeGrid();
     originalGrid(verticalSquares, horizontalSquares);
     hoverSquares();
-}
+};
+
+//make the grid mount when the page is loaded
+window.onload = originalGrid(dimensionY, dimensionX);
+//window.onload = hoverSquares();
+let mouseDown;
+let target;
+//document.body.onmousedown = () => (mouseDown = true);
+//document.body.onmouseup = () => (mouseDown = false);
+
+
