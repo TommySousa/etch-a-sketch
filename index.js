@@ -37,13 +37,12 @@ function paint (e) {
     this.classList.add('horizontal_hover');
 };
 
-//FUNCTION THAT MAKES THE 
+//FUNCTION THAT DETECTS WHEN THE MOUSE IS PRESSED DOWN OR UP
 const draw = () => {
     const container = document.querySelector('#container');
     container.addEventListener('mousedown', startDraw);
     container.addEventListener('mouseup', stopDraw)
 };
-
 
  //CLICK THE BUTTON AND CHANGE DE NUMBER OF SQUARES IN CANVAS
  const grid = document.querySelector('.grid');
@@ -53,9 +52,10 @@ const draw = () => {
 
  //FUNCTION THAT REMOVES AND APPENDS THE GRID AGAIN TO THE PAGE
 const removeGrid = () =>{
-    let container = document.querySelector('.container');
+    let container = document.getElementById('container');
     container.remove();
     const addContainer = document.createElement('div');
+    addContainer.setAttribute("id", "container");
     addContainer.classList.add('container');
     document.body.insertBefore(addContainer, document.body.firstChild)
 };
@@ -80,7 +80,7 @@ const resizeGrid = () => {
 
     removeGrid();
     originalGrid(verticalSquares, horizontalSquares);
-    hoverSquares();
+    draw();
 };
 
 
