@@ -36,15 +36,25 @@ const listen = () => {
     //CLIK THE BUTTON AND ACTIVATE THE GRID LINES ON THE CANVAS
     const lines = document.getElementById('add-grid');
     lines.addEventListener('click', () =>{
-        addLines()
-    })
+        addLines();
+    });
+
+    //clears the board change after
+    const clear = document.querySelector('.clear');
+    clear.addEventListener('click', () => {
+        removeGrid();
+        originalGrid(16, 16);
+        draw();
+    });
+
+
     
 }
 
 const addLines = () => {
     const container = document.getElementById('container');
     const lines = document.getElementById('add-grid');
-    
+
      if (!container.classList.contains('hasgrid')){
         container.classList.add('hasgrid');
         lines.innerHTML = 'Remove Grid';
@@ -59,7 +69,11 @@ const addLines = () => {
 const startDraw = (e) => {
     e.preventDefault();
     const squares = e.currentTarget.querySelectorAll('.horizontal');
-    squares.forEach(square => square.addEventListener('mouseover', paint));
+    squares.forEach(square => 
+    {
+         square.addEventListener('mouseover', paint);
+         square.addEventListener('click', paint);
+    });
 };
 
 //STOP DRAWING WHEN THE MOUSE IS HOVERING THE SQUARES
