@@ -5,7 +5,10 @@
  width: 700px;
  display: flex;
  border: 1px solid blue;
+}
 
+.horizontal-grid{
+    border: 1px solid black;
 }
 
 .horizontal {
@@ -23,6 +26,6 @@
 }
 
 .horizontal_hover{
-    background-color: green;
+    background-color: rgb(21, 230, 195);
 
 }
