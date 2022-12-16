@@ -1,8 +1,8 @@
 //CREATING THE DIVS IN THE CONTAINER
 const dimensionX = 16;
 const dimensionY = 16;
-let color = null;
 
+let color = null;
 const getColor = () => {
     if (color == null){
         color = document.getElementById('color');
@@ -12,7 +12,6 @@ const getColor = () => {
 
 const originalGrid = (y, x) => {
     const container = document.getElementById('container'); 
-    console.log(container)
     for (let i = 0; i<y; i++){
         let div = document.createElement('div');
         div.classList.add('vertical');
@@ -23,6 +22,37 @@ const originalGrid = (y, x) => {
             div.appendChild(divs);
         };
     };
+};
+
+//FUNCTION THAT HAS ALL THE BUTTON EVENT LISTENERS 
+const listen = () => {
+
+    //CLICK THE BUTTON AND CHANGE DE NUMBER OF SQUARES IN CANVAS
+    const grid = document.querySelector('.grid');
+    grid.addEventListener('click', () => {
+    resizeGrid();
+ });
+
+    //CLIK THE BUTTON AND ACTIVATE THE GRID LINES ON THE CANVAS
+    const lines = document.getElementById('add-grid');
+    lines.addEventListener('click', () =>{
+        addLines()
+    })
+    
+}
+
+const addLines = () => {
+    const container = document.getElementById('container');
+    const lines = document.getElementById('add-grid');
+    
+     if (!container.classList.contains('hasgrid')){
+        container.classList.add('hasgrid');
+        lines.innerHTML = 'Remove Grid';
+     }
+     else{
+        container.classList.remove('hasgrid');
+        lines.innerHTML = 'Add Grid';
+     }
 };
 
 //START DRAWING WHEN THE MOUSE IS HOVERING THE SQUARES
@@ -54,11 +84,6 @@ const draw = () => {
     container.addEventListener('mouseup', stopDraw);
 };
 
- //CLICK THE BUTTON AND CHANGE DE NUMBER OF SQUARES IN CANVAS
- const grid = document.querySelector('.grid');
- grid.addEventListener('click', () => {
-    resizeGrid();
- });
 
  //FUNCTION THAT REMOVES AND APPENDS THE GRID AGAIN TO THE PAGE
 const removeGrid = () =>{
@@ -96,5 +121,6 @@ const resizeGrid = () => {
 //make the grid mount when the page is loaded
 window.onload = originalGrid(dimensionY, dimensionX);
 window.onload = draw();
+window.onload = listen();
 
 

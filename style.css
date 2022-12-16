@@ -7,12 +7,11 @@
  border: 1px solid blue;
 }
 
-.horizontal-grid{
+.container.hasgrid .vertical .horizontal{
     border: 1px solid black;
 }
 
 .horizontal {
-    border: 1px solid black;
     height: 100%;
     width: 100%;
 }
