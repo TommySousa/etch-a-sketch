@@ -42,20 +42,16 @@ const listen = () => {
     //clears the board change after
     const clear = document.querySelector('.clear');
     clear.addEventListener('click', () => {
-        removeGrid();
-        originalGrid(16, 16);
-        draw();
+        clearGrid();
     });
+};
 
-
-    
-}
-
+//ADDS OR REMOVES THE GRID LINES 
 const addLines = () => {
     const container = document.getElementById('container');
     const lines = document.getElementById('add-grid');
 
-     if (!container.classList.contains('hasgrid')){
+     if(!container.classList.contains('hasgrid')){
         container.classList.add('hasgrid');
         lines.innerHTML = 'Remove Grid';
      }
@@ -90,27 +86,32 @@ function paint (e) {
     this.setAttribute('style', `background-color:${getColor()}`);
 };
 
-
-//FUNCTION THAT DETECTS WHEN THE MOUSE IS PRESSED DOWN OR UP
+//FUNCTION THAT DETECTS WHEN THE MOUSE IS PRESSED DOWN OR UP AND DRAWS
 const draw = () => {
     const container = document.querySelector('#container');
     container.addEventListener('mousedown', startDraw);
     container.addEventListener('mouseup', stopDraw);
 };
 
-
- //FUNCTION THAT REMOVES AND APPENDS THE GRID AGAIN TO THE PAGE
-const removeGrid = () =>{
-    let container = document.getElementById('container');
-    container.remove();
-    const addContainer = document.createElement('div');
-    addContainer.setAttribute("id", "container");
-    addContainer.classList.add('container');
-    document.body.insertBefore(addContainer, document.body.firstChild)
+//CLEARS THE GRID 
+const clearGrid = () => {
+    const squares = document.querySelectorAll('.horizontal');
+    squares.forEach(square => {
+        square.setAttribute('style', null);
+        square.classList.remove('horizontal_hover');
+    });
 };
 
-//FUNCTION THAT RESIZES THE GRID AND CHECKS IF USER INSERTED NUMBER BETWEEN 1-100
-//ADD STRIG VERIFICATION LATER
+//ELIMINATES THE GRID ELEMENTS TO CREATE A NEW GRID
+const removeGridElements = () => {
+    const container = document.querySelector('#container');
+    console.log(container)
+    console.log(container.children)
+    container.replaceChildren();
+};
+
+//FUNCTION THAT RESIZES THE GRID AND CHECKS IF USER INSERTED NUMBER BETWEEN 1-100;
+//ADD STRIG VERIFICATION LATER;
 const resizeGrid = () => {
     let horizontalSquares = prompt('How many vertical squares?');
     horizontalSquares = parseInt(horizontalSquares);
@@ -126,7 +127,7 @@ const resizeGrid = () => {
         verticalSquares = parseInt(verticalSquares);
     };
     
-    removeGrid();
+    removeGridElements();
     originalGrid(verticalSquares, horizontalSquares);
     draw();
 };

@@ -7,6 +7,7 @@
  border: 1px solid blue;
 }
 
+/* Class to add to the container to apply the grid to all elements inside the container*/
 .container.hasgrid .vertical .horizontal{
     border: 1px solid black;
 }
