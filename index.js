@@ -1,6 +1,7 @@
 //CREATING THE DIVS IN THE CONTAINER
 const dimensionX = 16;
 const dimensionY = 16;
+let erase = false;
 
 let color = null;
 const getColor = () => {
@@ -44,8 +45,24 @@ const listen = () => {
     clear.addEventListener('click', () => {
         clearGrid();
     });
+
+    const eraser = document.querySelector('.eraser');
+    eraser.addEventListener('click', () => {
+        if (erase == false) {
+            eraser.setAttribute('style', `background-color:hsl(0,0%,50%)`);
+            erase = true;
+        }
+        else if (erase == true) {
+            eraser.removeAttribute('style', `background-color:hsl(0,0%,50%)`);
+            erase = false
+        }
+    }) 
 };
 
+// //TOGGLES ERASER
+// const erase = () => {
+
+// }
 //ADDS OR REMOVES THE GRID LINES 
 const addLines = () => {
     const container = document.getElementById('container');
@@ -82,8 +99,14 @@ const stopDraw = (e) => {
 //FUNCTION THAT PAINTS  THIS REFERS TO THE SQUARE THAT THE MOUSE IS ON CURRENTLY
 function paint (e) {
     e.preventDefault();
-    this.classList.add('horizontal_hover');
-    this.setAttribute('style', `background-color:${getColor()}`);
+    if (erase == false){
+        this.classList.add('horizontal_hover');
+        this.setAttribute('style', `background-color:${getColor()}`);
+    }
+    else if (erase == true){
+        this.setAttribute('style', `background-color: #FFFFFF`);
+    }
+
 };
 
 //FUNCTION THAT DETECTS WHEN THE MOUSE IS PRESSED DOWN OR UP AND DRAWS
