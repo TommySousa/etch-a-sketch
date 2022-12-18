@@ -2,6 +2,7 @@
 const dimensionX = 16;
 const dimensionY = 16;
 let erase = false;
+let randomColor = false;
 
 let color = null;
 const getColor = () => {
@@ -46,6 +47,7 @@ const listen = () => {
         clearGrid();
     });
 
+    //TOOGLES THE ERASER
     const eraser = document.querySelector('.eraser');
     eraser.addEventListener('click', () => {
         if (erase == false) {
@@ -54,15 +56,23 @@ const listen = () => {
         }
         else if (erase == true) {
             eraser.removeAttribute('style', `background-color:hsl(0,0%,50%)`);
-            erase = false
+            erase = false;
         }
-    }) 
+    }); 
+
+    //TOGGLES RAINBOW
+    const rainbow = document.querySelector('.rainbow');
+    rainbow.addEventListener('click', () => {
+        if (randomColor == false) {
+            rainbow.setAttribute('style', `background-color:hsl(0,0%,50%)`);
+            randomColor = true;
+        } else if (randomColor == true) {
+            rainbow.removeAttribute('style', `background-color:hsl(0,0%,50%)`);
+            randomColor = false;
+        }
+    });
 };
 
-// //TOGGLES ERASER
-// const erase = () => {
-
-// }
 //ADDS OR REMOVES THE GRID LINES 
 const addLines = () => {
     const container = document.getElementById('container');
@@ -77,6 +87,16 @@ const addLines = () => {
         lines.innerHTML = 'Add Grid';
      }
 };
+
+
+//CREATES A RANDOM NUMBER BETWEEN 0 AND 256
+const random = () => {
+    return Math.floor(Math.random() * (257));
+};
+
+const shade = () => {
+
+}
 
 //START DRAWING WHEN THE MOUSE IS HOVERING THE SQUARES
 const startDraw = (e) => {
@@ -99,13 +119,17 @@ const stopDraw = (e) => {
 //FUNCTION THAT PAINTS  THIS REFERS TO THE SQUARE THAT THE MOUSE IS ON CURRENTLY
 function paint (e) {
     e.preventDefault();
-    if (erase == false){
+    if (erase == false && randomColor == false){
         this.classList.add('horizontal_hover');
         this.setAttribute('style', `background-color:${getColor()}`);
     }
     else if (erase == true){
         this.setAttribute('style', `background-color: #FFFFFF`);
-    }
+    } 
+    else if (randomColor == true && erase == false) {
+        this.setAttribute('style', `background-color: rgb(${random()}, ${random()}, ${random()}`)
+    };
+
 
 };
 
