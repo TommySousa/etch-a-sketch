@@ -1,9 +1,15 @@
 //CREATING THE DIVS IN THE CONTAINER
 const dimensionX = 16;
 const dimensionY = 16;
+
 let erase = false;
 let randomColor = false;
-
+let shader = false;
+let hslColor;
+let newColor;
+let h;
+let s;
+let l;
 let color = null;
 const getColor = () => {
     if (color == null){
@@ -28,7 +34,6 @@ const originalGrid = (y, x) => {
 
 //FUNCTION THAT HAS ALL THE BUTTON EVENT LISTENERS 
 const listen = () => {
-
     //CLICK THE BUTTON AND CHANGE DE NUMBER OF SQUARES IN CANVAS
     const grid = document.querySelector('.grid');
     grid.addEventListener('click', () => {
@@ -59,6 +64,18 @@ const listen = () => {
             erase = false;
         }
     }); 
+
+    //TOGGLES SHADER
+    const shade = document.querySelector('.shader');
+    shade.addEventListener('click', () => {
+        if (shader == false) {
+            shade.setAttribute('style', `background-color:hsl(0,0%,50%)`);
+            shader = true;
+        } else if (shader == true) {
+            shade.removeAttribute('style', `background-color:hsl(0,0%,50%)`);
+            shader = false;
+        }
+    });
 
     //TOGGLES RAINBOW
     const rainbow = document.querySelector('.rainbow');
@@ -94,9 +111,83 @@ const random = () => {
     return Math.floor(Math.random() * (257));
 };
 
-const shade = () => {
+//RGB TO HSL FOUND THIS ON THE INTERNET
+function RGBToHSL(rgb) {
+    let sep = rgb.indexOf(",") > -1 ? "," : " ";
+    rgb = rgb.substr(4).split(")")[0].split(sep);
+  
+    for (let R in rgb) {
+      let r = rgb[R];
+      if (r.indexOf("%") > -1) 
+        rgb[R] = Math.round(r.substr(0,r.length - 1) / 100 * 255);
+    }
 
-}
+    let r = rgb[0] / 255,
+        g = rgb[1] / 255,
+        b = rgb[2] / 255;
+
+    let cmin = Math.min(r,g,b),
+    cmax = Math.max(r,g,b),
+    delta = cmax - cmin,
+    h = 0,
+    s = 0,
+    l = 0;
+
+    if (delta == 0)
+        h = 0;
+  // Red is max
+    else if (cmax == r)
+        h = ((g - b) / delta) % 6;
+  // Green is max
+    else if (cmax == g)
+        h = (b - r) / delta + 2;
+    // Blue is max
+    else
+        h = (r - g) / delta + 4;
+
+    h = Math.round(h * 60);
+    
+    // Make negative hues positive behind 360°
+    if (h < 0)
+      h += 360;
+
+      l = (cmax + cmin) / 2;
+
+      // Calculate saturation
+      s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+        
+      // Multiply l and s by 100
+      s = +(s * 100).toFixed(1);
+      l = +(l * 100).toFixed(1);
+    
+      return "hsl(" + h + "," + s + "%," + l + "%)";
+};
+
+//gets hsl shade parameter and adds 10% to the whole color
+const addShade = (col) => {
+    //regular expression that checks the hsl
+    const hslMatch = new RegExp(/hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g);
+    let arr = hslMatch.exec(col);
+
+    //TO AVOID TYPE ERRORS
+    if (arr == null){
+        arr = hslMatch.exec(col)
+    };
+    console.log(col)
+    h = arr[1];
+    s = arr[2];
+    l = arr[3]; //shade Parameter
+    l = parseFloat(l);
+
+    //DON'T ADD NEGATIVE SHADERS
+    if (l>0) {
+        l -= 10;
+    } else if (l<0){
+        l = 0;
+    }
+};
+
+
 
 //START DRAWING WHEN THE MOUSE IS HOVERING THE SQUARES
 const startDraw = (e) => {
@@ -119,15 +210,25 @@ const stopDraw = (e) => {
 //FUNCTION THAT PAINTS  THIS REFERS TO THE SQUARE THAT THE MOUSE IS ON CURRENTLY
 function paint (e) {
     e.preventDefault();
-    if (erase == false && randomColor == false){
+    if (erase == false && randomColor == false && shader == false){
         this.classList.add('horizontal_hover');
         this.setAttribute('style', `background-color:${getColor()}`);
     }
     else if (erase == true){
         this.setAttribute('style', `background-color: #FFFFFF`);
     } 
-    else if (randomColor == true && erase == false) {
+    else if (randomColor == true && erase == false ) {
         this.setAttribute('style', `background-color: rgb(${random()}, ${random()}, ${random()}`)
+    } 
+    else if (shader == true && randomColor == false && erase == false){   
+        if (this.style.backgroundColor == ""){
+            this.style.backgroundColor = ('rgb(255,255,255)');
+            hslColor = RGBToHSL(this.style.backgroundColor);
+            console.log(hslColor)
+        } 
+        hslColor = RGBToHSL(this.style.backgroundColor);
+        hslColor = addShade(hslColor);
+        this.setAttribute('style', `background-color: hsl(${h},${s}%,${l}%)`);
     };
 
 
@@ -178,6 +279,7 @@ const resizeGrid = () => {
     originalGrid(verticalSquares, horizontalSquares);
     draw();
 };
+arr = null;
 
 
 //make the grid mount when the page is loaded
