@@ -189,8 +189,6 @@ const addShade = (col) => {
     }
 };
 
-
-
 //START DRAWING WHEN THE MOUSE IS HOVERING THE SQUARES
 const startDraw = (e) => {
     e.preventDefault();
@@ -267,7 +265,7 @@ const resizeGrid = () => {
         alert('Insert a numeric value between 1-100');
         horizontalSquares = querySelector('.rows');
     }
-
+    
     let verticalSquares = document.querySelector('.columns');
     verticalSquares = verticalSquares.value
     if(verticalSquares > 100 || verticalSquares <= 0){
@@ -277,7 +275,6 @@ const resizeGrid = () => {
         alert('Insert a numeric value between 1-100');
         verticalSquares = querySelector('.rows');
     }
-    
     removeGridElements();
     originalGrid(verticalSquares, horizontalSquares);
     draw();

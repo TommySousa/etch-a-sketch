@@ -1,7 +1,21 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 75px;
+    
+}
+
+.container-options{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
 
 .container {
- height: 700px;
- width: 700px;
+ height: 500px;
+ width: 500px;
  display: flex;
  border: 1px solid black;
 }
@@ -27,5 +41,21 @@
 .options {
     display: flex;
     flex-direction: column;
-    
+    gap: 5px;
+    width: 30%;
+}
+
+.label{
+    display: inline;
+    font-size: 15px;
+}
+
+.inputs{
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.inputs input{
+    width: 50%;
 }
